@@ -55,9 +55,7 @@ func (c *defaultClient) GeneratePDF(html string) ([]byte, error) {
 }
 
 func closeQuietly(c io.Closer) {
-	if c != nil {
-		_ = c.Close()
-	}
+	_ = c.Close()
 }
 
 func New(serviceURL string) Client {

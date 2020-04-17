@@ -33,12 +33,12 @@ func (c *defaultClient) GeneratePDF(html string) ([]byte, error) {
     if err != nil {
         return nil, fmt.Errorf("could not generate pdf: %w", err)
     }
+    
+    defer closeQuietly(resp.Body)    
 
     if resp.StatusCode != http.StatusOK {
         return nil, fmt.Errorf("invalid pdf service response code: %d", resp.StatusCode)
     }
-
-    defer closeQuietly(resp.Body)
 
     jsonResp := msg{}
     err = json.NewDecoder(resp.Body).Decode(&jsonResp)
